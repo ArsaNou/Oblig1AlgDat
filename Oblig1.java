@@ -28,7 +28,7 @@ public class Oblig1 {
             return 0;
         }
 
-        for (int i = 1; i < a.length; i++;){
+        for (int i = 1; i <= a.length; i++;){
 
             if(!(a[i] >= a[i-1])){
                 throw new IllegalStateException("Tabellen er ikke sortert!");
@@ -38,7 +38,6 @@ public class Oblig1 {
             }
         }
         return ulike;
-        throw new NotImplementedException();
     }
 
 
@@ -49,7 +48,7 @@ public class Oblig1 {
 
     ///// Oppgave 4 //////////////////////////////////////
     public static void delsortering(int[] a) {
-        throw new NotImplementedException();
+
     }
 
     ///// Oppgave 5 //////////////////////////////////////
