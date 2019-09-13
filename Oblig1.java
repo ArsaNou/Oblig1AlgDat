@@ -67,10 +67,20 @@ public class Oblig1 {
             }
         }
 
-        for (int n = odde; n > 1; ){
+        for (int n = odde; n > 1;){
+            int indexbytt = 0;
 
+            for (int i = 1; i < n; i++){
+
+                if(a[i-1] > a[i]){
+                    int temp = a[i-1];
+                    a[i-1] = a[i];
+                    a[i] = temp;
+                    indexbytt = i;
+                }
+            }
+            n = indexbytt;
         }
-
     }
 
     ///// Oppgave 5 //////////////////////////////////////
