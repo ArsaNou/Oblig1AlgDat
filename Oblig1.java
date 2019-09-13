@@ -48,6 +48,28 @@ public class Oblig1 {
 
     ///// Oppgave 4 //////////////////////////////////////
     public static void delsortering(int[] a) {
+        int venstre = 0;
+        int hoyre = a.length-1;
+        int odde = 0;
+
+        while (venstre < hoyre){
+            while(a[venstre] mod 2 != 0){
+                venstre++;
+                odde++;
+            }
+            while(a[høyre] mod 2 == 0){
+                høyre--;
+            }
+            if(left < right){
+                int temp = a[venstre];
+                a[venstre] = a[høyre];
+                a[hoyre] = temp;
+            }
+        }
+
+        for (int n = odde; n > 1; ){
+
+        }
 
     }
 
