@@ -21,7 +21,7 @@ public class Oblig1 {
         throw new NotImplementedException();
     }
 
-    ///// Oppgave 2 //////////////////////////////////////
+    ///// Oppgave 2 ///////////////////////////////////////
     public static int antallUlikeSortert(int[] a) {
         int ulike = 0;
         if(a.length == 0){
