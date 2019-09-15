@@ -100,7 +100,13 @@ public class Oblig1 {
 
     ///// Oppgave 5 //////////////////////////////////////
     public static void rotasjon(char[] a) {
-        throw new NotImplementedException();
+        char siste = a[a.length-1];
+
+        for(int i = a.length-2; i >= 0; i--){
+            a[i+1] = a[i];
+        }
+
+        a[0] = siste;
     }
 
     ///// Oppgave 6 //////////////////////////////////////
