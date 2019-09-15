@@ -111,7 +111,35 @@ public class Oblig1 {
 
     ///// Oppgave 6 //////////////////////////////////////
     public static void rotasjon(char[] a, int k) {
-        throw new NotImplementedException();
+        if(k == 0 || a.length == 1){                        //hvis antall rotasjoner er 0 eller
+            return;                                         //hvis det kun er ett tall i arrayet, gjøres ingenting
+        }
+
+        if (k < 0){                                         //roterer mot venstre hvis k er negativ
+            int venstre = k - (2*k);                        //positivt antall rotasjoner mot venstre
+
+            for (int i = 0; i < venstre; i++){
+                int j;
+                char forste = a[0];
+
+                for (j = 0; j < a.length-1; j++){
+                    a[j] = a[j+1];
+                }
+
+                a[j] = forste;
+            }
+        }
+        else {                                              //roterer mot høyre ellers
+            for (int i = 0; i <= k; i++){
+                int j;
+                char siste = a[a.length-1];
+
+                for (int j = a.length-2; j >= 0; j--){
+                    a[j+1] = a[j];
+                }
+                a[j] = siste;
+            }
+        }
     }
 
     ///// Oppgave 7 //////////////////////////////////////
