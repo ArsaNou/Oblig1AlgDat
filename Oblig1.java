@@ -112,14 +112,14 @@ public class Oblig1 {
     ///// Oppgave 6 //////////////////////////////////////
     public static void rotasjon(char[] a, int k) {
         if(k == 0 || a.length == 1){                        //hvis antall rotasjoner er 0 eller
-            return;                                         //hvis det kun er ett tall i arrayet, gjøres ingenting
+            return;                                         //hvis det kun er ett tall i arrayet, gjores ingenting
         }
 
         if (k < 0){                                         //roterer mot venstre hvis k er negativ
             int venstre = k - (2*k);                        //positivt antall rotasjoner mot venstre
 
-            for (int i = 0; i < venstre; i++){
-                int j;
+            for (int i = 0; i <= venstre; i++){              //forste for-loop er antall rotasjoner
+                int j;                                       //andre for-loop flytter alle tallene en gang til venstre
                 char forste = a[0];
 
                 for (j = 0; j < a.length-1; j++){
