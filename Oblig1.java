@@ -155,30 +155,36 @@ public class Oblig1 {
 
     ///// Oppgave 8 //////////////////////////////////////
     public static int[] indekssortering(int[] a) {
+        //hjelpetabeller for å ikke endre på opprinnelige arrayet
         int[] verdier = new int[a.length];
         int[] indekser = new int[a.length];
 
 
-
+        //lager int som er storste mulige for å eliminere det minste hver gang vi finner den
         final int MAKS_MULIGE = Integer.MAX_VALUE;
 
-        //kopierer arrayet over i hjelpetabell
+        //kopierer opprinnelige arrayet over i hjelpetabell
         for (int i = 0; i < a.length; i++) verdier[i] = a[i];
 
 
 
         for (int i = 0; i < verdier.length; i++){
 
+            //fungerer for å initialisere hjelpevariablene og resette hver loop
             int minsteindex = 0;
             int minste = verdier[0];
 
             for (int j= 0; j < verdier.length; j++){
                 if(verdier[j] < minste){
+                    //finner indeksen og setter minsteindeks lik den og minste verdi
                     minsteindex = j;
                     minste = verdier[j];
                 }
             }
+            //setter indekser-tabellens innhold når vi har funnet minsteindekser
             indekser[i] = minsteindex;
+            //necessary for å kunne eliminere det minste tallet hver gang vi finner det
+            //da hopper loopen over den neste gang
             verdier[minsteindex] = MAKS_MULIGE;
         }
         return indekser;
