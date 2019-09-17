@@ -122,14 +122,14 @@ public class Oblig1 {
                 int j;                                       //andre for-loop flytter alle tallene en gang til venstre
                 char forste = a[0];
 
-                for (j = 0; j < a.length-1; j++){
+                for (j = 0; j <= a.length-1; j++){
                     a[j] = a[j+1];
                 }
 
                 a[j] = forste;
             }
         }
-        else {                                              //roterer mot høyre ellers
+        else {                                                 //roterer mot høyre ellers
             for (int i = 0; i <= k; i++){
                 int j;
                 char siste = a[a.length-1];
@@ -155,7 +155,33 @@ public class Oblig1 {
 
     ///// Oppgave 8 //////////////////////////////////////
     public static int[] indekssortering(int[] a) {
-        throw new NotImplementedException();
+        int[] verdier = new int[a.length];
+        int[] indekser = new int[a.length];
+
+
+
+        final int MAKS_MULIGE = Integer.MAX_VALUE;
+
+        //kopierer arrayet over i hjelpetabell
+        for (int i = 0; i < a.length; i++) verdier[i] = a[i];
+
+
+
+        for (int i = 0; i < verdier.length; i++){
+
+            int minsteindex = 0;
+            int minste = verdier[0];
+
+            for (int j= 0; j < verdier.length; j++){
+                if(verdier[j] < minste){
+                    minsteindex = j;
+                    minste = verdier[j];
+                }
+            }
+            indekser[i] = minsteindex;
+            verdier[minsteindex] = MAKS_MULIGE;
+        }
+        return indekser;
     }
 
 
