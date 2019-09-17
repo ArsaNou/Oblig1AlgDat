@@ -118,26 +118,20 @@ public class Oblig1 {
         if (k < 0){                                         //roterer mot venstre hvis k er negativ
             int venstre = k - (2*k);                        //positivt antall rotasjoner mot venstre
 
-            for (int i = 0; i <= venstre; i++){              //forste for-loop er antall rotasjoner
+            for (int i = 1; i <= venstre; i++){              //forste for-loop er antall rotasjoner
                 int j;                                       //andre for-loop flytter alle tallene en gang til venstre
                 char forste = a[0];
 
-                for (j = 0; j <= a.length-1; j++){
+                for (j = 0; j < a.length-1; j++){
                     a[j] = a[j+1];
                 }
 
-                a[j] = forste;
+                a[a.length-1] = forste;
             }
         }
         else {                                                 //roterer mot høyre ellers
-            for (int i = 0; i <= k; i++){
-                int j;
-                char siste = a[a.length-1];
-
-                for (int j = a.length-2; j >= 0; j--){
-                    a[j+1] = a[j];
-                }
-                a[j] = siste;
+            for (int i = 1; i <= k; i++){
+                rotasjon(a);
             }
         }
     }
@@ -155,7 +149,7 @@ public class Oblig1 {
 
     ///// Oppgave 8 //////////////////////////////////////
     public static int[] indekssortering(int[] a) {
-        //hjelpetabeller for å ikke endre på opprinnelige arrayet
+        //hjelpetabeller for aa ikke endre på opprinnelige arrayet
         int[] verdier = new int[a.length];
         int[] indekser = new int[a.length];
 
