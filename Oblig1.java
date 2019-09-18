@@ -110,28 +110,41 @@ public class Oblig1 {
     }
 
     ///// Oppgave 6 //////////////////////////////////////
-    public static void rotasjon(char[] a, int k) {
-        if(k == 0 || a.length == 1){                        //hvis antall rotasjoner er 0 eller
-            return;                                         //hvis det kun er ett tall i arrayet, gjores ingenting
-        }
+    public static void rotasjon( char[] a, int k )
+    {
+        int n = a.length;
 
-        if (k < 0){                                         //roterer mot venstre hvis k er negativ
-            int venstre = k - (2*k);                        //positivt antall rotasjoner mot venstre
+        if( n == 0 )return;
 
-            for (int i = 1; i <= venstre; i++){              //forste for-loop er antall rotasjoner
-                int j;                                       //andre for-loop flytter alle tallene en gang til venstre
-                char forste = a[0];
+        k = k % n;
 
-                for (j = 0; j < a.length-1; j++){
-                    a[j] = a[j+1];
-                }
+        char[] h = new char[Math.abs(k)];
 
-                a[a.length-1] = forste;
+        if( k > 0 )
+        {
+            int hjelp = 0;
+            for( int i = n-k; i < n; i++ ){
+
+                h[hjelp++] = a[i];
             }
+
+            for( int i = n - 1; i >= 0; i-- ){
+                if( i - k < 0 )
+                    a[i] = h[i];
+                else
+                    a[i] = a[i - k];
+            }
+
         }
-        else {                                                 //roterer mot høyre ellers
-            for (int i = 1; i <= k; i++){
-                rotasjon(a);
+        else{
+            while( k != 0 ){
+                char første = a[0];
+
+                for( int i = 0; i < n - 1; i++ ){
+                    a[i] = a[i + 1];
+                    a[n - 1] = første;
+                    k++;
+                }
             }
         }
     }
