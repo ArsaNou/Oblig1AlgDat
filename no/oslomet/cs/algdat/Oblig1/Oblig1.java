@@ -71,28 +71,26 @@ public class Oblig1 {
 
     ///// Oppgave 2 //////////////////////////////////////
     public static int antallUlikeSortert(int[] a) {
-        if (a.length == 0) {
-            return 0;
-        }
-        if (a.length == 1)return 1;
 
-        int teller = 0;
-        int verdi = 0;
+        int ulike = 0;
 
-        for (int i = 0; i < a.length-1; i++) {
-            if (!(a[i+1] >= a[i])){
-                throw new IllegalStateException("Tabellen er ikke sortert!");
+        if(a.length > 1) {
+            int tallet = a[0];
+            for (int i = 1; i < a.length; i++) {
+                if (tallet > a[i]) throw new IllegalStateException("Tabellen er ikke sortert!");
+                tallet = a[i];
             }
-            if (a[i] > verdi) {
-                verdi = a[i];
-                teller++;
-            } else if (a[i] == verdi) {
-                verdi = a[i];
-            }
-
         }
-        return teller;
-
+        if(a.length >= 1){
+            ulike = 1;
+            int temp = a[0];
+            for(int i = 1; i < a.length; ++i){
+                if(a[i] != temp){
+                    ulike++;
+                    temp = a[i];
+                }
+            }
+        } return ulike;
     }
 
 
@@ -124,133 +122,67 @@ public class Oblig1 {
 
     ///// Oppgave 4 //////////////////////////////////////
     public static void delsortering(int[] a) {
-        /*
+        if (a.length < 1) return;
+        int venstre = a[0];
+        int hoyre = a.length-1;
+
         int odde = 0;
-        int partall = 0;
-
-        if(a.length< 1) return;
-
-
-
-        for (int i = 0; i < a.length; i++){
-            if(a[i] % 2 == 0) {
-                partall++;
-            }else {
-                int temp = a[i];
-                a[i] = a[odde];
-                a[odde] = temp;
+        for (int i :a){
+            if (i % 2 != 0){
                 odde++;
             }
         }
-        quicksortering(a, 0,odde);
-        quicksortering(a, odde, a.length);
-    }
-    */
-        if (a.length < 1) return;
-        int Odde = finnOdde(a);
 
-        int venstre = 0;
-        int hoyre = a.length - 1;
-            while(venstre<hoyre) {
+        for (int i = 0; i < odde; ++i){
 
-                while (venstre < Odde && hoyre >= Odde && a[venstre] % 2 != 0) venstre++;
-                while (venstre < Odde && hoyre >= Odde && a[hoyre] % 2 == 0) hoyre--;
+            if(a[i] % 2 == 0){
+                venstre = a[i];
 
+                for (int j = hoyre; j >= odde; --j){
+                    if (a[j] % 2 != 0){
+                        hoyre = j; a[i] = a[j]; a[j] = venstre;
 
-                if ((a[venstre] % 2) == 0 && (a[hoyre] % 2) != 0) {
-                    bytt(a, venstre++, hoyre--);
-
-                } else if ((a[venstre] % 2) == 0 && (a[hoyre] % 2) == 0) {
-                    hoyre--;
-
-                } else if ((a[venstre] % 2) != 0 && (a[hoyre] % 2) != 0) {
-                    venstre++;
-
-                } else if ((a[venstre] % 2) != 0 && (a[hoyre] % 2) == 0) {
-                    venstre++;
-                    hoyre--;
+                        break;
+                    }
                 }
-                //Arrays.sort(a, 0, Odde);
-                //Arrays.sort(a, Odde, a.length);
-                quicksortering(a, 0,Odde);
-                quicksortering(a, Odde, a.length);
-                //Fungerer kun med Array.sort
-            }
-    }
-
-    public static int partisjonering(int arr[], int begin, int end) {
-        int pivot = arr[end];
-        int i = (begin-1);
-
-        for (int j = begin; j < end; j++) {
-            if (arr[j] <= pivot) {
-                i++;
-
-                bytt(arr, arr[i], arr[j]);
             }
         }
 
-        bytt(arr, arr[i+1], arr[end]);
-        return i+1;
+        quickSort(a,0,odde-1);
+        quickSort(a,odde,a.length-1);
     }
 
-    public static void quickSort(int a[], int start, int slutt) {
-        if (start < slutt) {
-            int partisjonsIndex = partisjonering(a, start, slutt);
+    public static int partisjon(int a[],int start,int slutt){
 
-            quickSort(a, start, partisjonsIndex - 1);
-            quickSort(a, partisjonsIndex + 1, slutt);
-        }
-    }
-
-        public static int partisjonering(int[] a, int v, int h, int indeks) {
-        bytt(a, indeks, h);           // skilleverdi a[indeks] flyttes bakerst
-        int pos = parter0(a, v, h - 1, a[h]);  // partisjonerer a[v:h - 1]
-        bytt(a, pos, h);              // bytter for å få skilleverdien på rett plass
-        return pos;                   // returnerer posisjonen til skilleverdien
-    }
-
-    public static void quicksortering0(int[] a, int v, int h)  // en privat metode
-    {
-        if (v >= h) return;  // a[v:h] er tomt eller har maks ett element
-        int k = partisjonering(a, v, h, (v + h) / 2);  // bruker midtverdien
-        quicksortering0(a, v, k - 1);     // sorterer intervallet a[v:k-1]
-        quicksortering0(a, k + 1, h);     // sorterer intervallet a[k+1:h]
-    }
-
-    public static void quicksortering(int[] a, int fra, int til)   // sorterer hele tabellen
-    {
-        quicksortering0(a, fra, til-1);
-    }
-
-    private static int parter0(int[] a, int v, int h, int skilleverdi)
-    {
-        while (true)                                  // stopper når v > h
-        {
-            while (v <= h && a[v] < skilleverdi) v++;   // h er stoppverdi for v
-            while (v <= h && a[h] >= skilleverdi) h--;  // v er stoppverdi for h
-
-            if (v < h) bytt(a,v++,h--);                 // bytter om a[v] og a[h]
-            else  return v;  // a[v] er nåden første som ikke er mindre enn skilleverdi
-        }
-    }
-
-   public static int finnOdde(int[] a) {
-        int Odde = 0;
-
-        for (int i = 0; i < a.length; i++) {
-            if ((a[i] % 2) != 0) {
-                Odde++;
+        int venstre = start-1;
+        for(int i = start; i< slutt; i++) {
+            if (a[i] <= a[slutt]) {
+                venstre++;
+                bytt(a,venstre,i);
             }
+
         }
-        return Odde;
+        bytt(a,venstre+1, slutt);
+        return venstre+1;
+
+
+    }
+    public static void quickSort(int[] a,int start, int slutt){
+        if(start < slutt){
+            int midt= partisjon(a,start,slutt);
+
+            quickSort(a,start,midt-1);
+            quickSort(a,midt+1,slutt);
+        }
     }
 
-    public static void bytt(int[] a, int i, int j) {
-        int temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
+
+    public static void bytt(int[] a, int i, int j)
+    {
+        int temp = a[i]; a[i] = a[j]; a[j] = temp;
     }
+
+
 
     ///// Oppgave 5 //////////////////////////////////////
     public static void rotasjon(char[] a) {
@@ -269,28 +201,43 @@ public class Oblig1 {
     }
 
     ///// Oppgave 6 //////////////////////////////////////
-    public static void rotasjon(char[] a, int k) {
-        if (k == 0 || a.length == 1) {                        //hvis antall rotasjoner er 0 eller
-            return;                                         //hvis det kun er ett tall i arrayet, gjores ingenting
+    public static void rotasjon(char[] a, int k){
+        int n = a.length;
+
+        if (n < 2){
+            return;
         }
 
+        k %= n;
+        char[] kopitemp = new char[Math.abs(k)];
 
-        if (k < 0) {                                         //roterer mot venstre hvis k er negativ
-            int venstre = k - (2 * k);                        //positivt antall rotasjoner mot venstre
+        int indekser = 0;
 
-            for (int i = 1; i <= venstre; i++) {              //forste for-loop er antall rotasjoner
-                int j;                                       //andre for-loop flytter alle tallene en gang til venstre
-                char forste = a[0];
 
-                for (j = 0; j < a.length - 1; j++) {
-                    a[j] = a[j + 1];
-                }
-
-                a[a.length - 1] = forste;
+        if (k > 0) {
+            for (int i = n-k; i<n; i++) {
+                kopitemp[indekser++] = a[i];
             }
-        } else {                                                 //roterer mot høyre ellers
-            for (int i = 1; i <= k; i++) {
-                rotasjon(a);
+
+            for (int i = n-k-1; i >= 0; i--) {
+                a[k+i] = a[i];
+                if (i < k){
+                    a[i] = kopitemp[i];
+                }
+            }
+        } else if (k < 0){
+            k = Math.abs(k);
+
+            for (int i = 0; i < k; i++){
+                kopitemp[i] = a[i];
+            }
+
+            for (int i = 0; i <= n-k-1; i++){
+                a[i] = a[k+i];
+            }
+
+            for(int i = 0; i < kopitemp.length; i++){
+                a[n-i-1] = kopitemp[k-i-1];
             }
         }
     }
@@ -356,8 +303,6 @@ public class Oblig1 {
         //kopierer opprinnelige arrayet over i hjelpetabell
         for (int i = 0; i < a.length; i++) verdier[i] = a[i];
 
-
-
         for (int i = 0; i < verdier.length; i++){
 
             //fungerer for å initialisere hjelpevariablene og resette hver loop
@@ -384,68 +329,99 @@ public class Oblig1 {
     ///// Oppgave 9 //////////////////////////////////////
     public static int[] tredjeMin(int[] a) {
 
-        int enVerd = 0;
-        int toVerd = 0;
-        int treVerd = 0;
-
-        int en = Integer.MAX_VALUE;
-        int to = Integer.MAX_VALUE;
-        int tre = Integer.MAX_VALUE;
-
-
-
-
-        for (int i = 0; i < a.length; i++) {
-            boolean ta = false;
-
-            for (int j = 0; j<a.length; j++){
-                if (a[i] < en) {
-                    tre = to;
-                    to = en;
-                    en = a[i];
-                    enVerd = i;
-                    ta = true;
-                    break;
-
-                } else if (a[i] < to) {
-                    tre = to;
-                    to = a[i];
-                    toVerd = i;
-                    ta = true;
-                    break;
-
-                } else if (a[i] < tre) {
-                    tre = a[i];
-                    treVerd = i;
-                    ta = true;
-                    break;
-
-                }
-            }
-
-
+        if(a.length<3){
+            throw new NoSuchElementException("Tabellen har ferre enn 3 elementer.");
         }
 
-        return new int[]{enVerd, toVerd, treVerd};
+        int [] lengde = new int [3];
+        for(int i = 0; i<lengde.length; i++){
+            lengde[i] = a[i];
+        }
+        int [] array = indekssortering(lengde);
+
+        int pos1 = 0;
+        int pos2 = 1;
+        int pos3 = 2;
+
+        pos1 = array[0];
+        pos2 = array[1];
+        pos3 = array[2];
+
+        int en = a[pos1];
+        int to = a[pos2];
+        int tre = a[pos3];
+
+        for(int i = 3; i < a.length; i++){
+            if(a[i] < tre) {
+                if (a[i] < to) {
+                    if (a[i] < en) {
+                        pos3 = pos2;
+                        tre = to;
+
+                        pos2 = pos1;
+                        to = en;
+
+                        pos1 = i;
+                        en = a[pos1];
+                    } else {
+                        pos3 = pos2;
+                        tre = to;
+
+                        pos2 = i;
+                        to = a[pos2];
+                    }
+                } else {
+                    pos3 = i;
+                    tre = a[pos3];
+                }
+            }
+        }
+        return new int[] {pos1, pos2, pos3};
     }
 
     ///// Oppgave 10 //////////////////////////////////////
     public static int bokstavNr(char bokstav) {
-        throw new NotImplementedException();
+
+        char[] alfabet={'A','B','C','D','E','F',
+                'G','H','I','J','K','L','M',
+                'N','O','P','Q','R','S','T',
+                'U','V','W','X','Y','Z','Æ','Ø','Å'};
+
+        for(int i = 0; i< alfabet.length; i++){
+
+            if(alfabet[i] == bokstav) {
+                return i;
+            }
+
+        }
+        return 31;
     }
 
-    public static boolean inneholdt(String a, String b){
-        if (a.length() > b.length()) return false;
+    public static void mengde(char[] a,int[] b){
 
-        int[] antall = new int[256];
+        for (char i : a) {
+            b[bokstavNr(i)] +=1 ;
+        }
+    }
 
-        int n = a.length();
-        int m = b.length();
+    public static boolean inneholdt(String a, String b) {
+        int length=32;
 
-        for (int i = 0; i < n; i++) antall[a.charAt(i)]++;
+        char[] Achars=a.toCharArray();
+        char[] Bchars=b.toCharArray();
 
-        for (int i = 0; i < antall.length; i++) if (antall[i] > 0) return false;
 
+        int[] mengdeA = new int[length];
+        int[] mengdeB = new int[length];
+
+        mengde(Achars,mengdeA);
+        mengde(Bchars,mengdeB);
+
+        for(int i=0;i<length-2;i++){
+            if(mengdeB[i] < mengdeA[i]){
+                return false;
+            }
+        }
         return true;
     }
 
